@@ -7,3 +7,11 @@ CREATE TABLE user_login (
     UNIQUE KEY uk_user_id (user_id),
     FOREIGN KEY fk_user_id (user_id) REFERENCES user(id)
 );
+CREATE TABLE  `game_state` (
+    `id`          INT     UNSIGNED    NOT NULL AUTO_INCREMENT,
+    `name`        INT                 NOT NULL,
+    `created_at` TIMESTAMP            DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    `updated_at` TIMESTAMP            DEFAULT CURRENT_TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY gs_name (name)
+);
