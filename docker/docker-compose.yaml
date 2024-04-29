@@ -1,5 +1,5 @@
 version: '3.8'
-name: mest-bo
+name: fullstack
 services:
   fullstack-db:
     image: mysql:8.0
