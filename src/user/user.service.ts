@@ -23,8 +23,19 @@ export class UserService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+     const userUpdate =  await this.usersRepository.update( { 
+      id: id}, 
+      { 
+        username: updateUserDto.username,
+        userPassword: updateUserDto.user_password
+      });
+      if(userUpdate.affected > 0) {
+        return this.usersRepository.findOne( { where: { id}});
+      } 
+      else {
+        return { statusCode: '304'}
+      }
   }
 
   remove(id: number) {
