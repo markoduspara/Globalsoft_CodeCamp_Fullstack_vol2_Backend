@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -16,7 +16,19 @@ export class UserService {
   }
 
   findAll() {
-    return this.usersRepository.find({});
+    return this.usersRepository.find({
+      select: ['id', 'username'], //SELECT id, username FROM user
+      where: { username: 'admin' }, //WHERE username = 'admin'
+    });
+  }
+
+  async find(password: string) {
+    const [data, count] = await this.usersRepository.findAndCount({
+      where: { userPassword: ILike('%' + password + '%') },
+    });
+    if (count === 0) throw new NotFoundException();
+
+    return data;
   }
 
   findOne(id: number) {
