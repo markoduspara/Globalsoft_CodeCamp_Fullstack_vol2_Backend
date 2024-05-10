@@ -30,6 +30,12 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
+  @Get('/findbypassword/:password')
+  find(@Param('password') password: string) {
+    console.log(password);
+    return this.userService.find(password);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
