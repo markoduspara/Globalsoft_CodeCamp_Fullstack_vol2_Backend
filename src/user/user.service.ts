@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -11,9 +11,11 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
-  create(createUserDto: CreateUserDto) {
-    return createUserDto;
-  }
+  async create(createUserDto: CreateUserDto) {
+    const user = this.usersRepository.create(createUserDto as DeepPartial<User>);
+    await this.usersRepository.save(user);
+    return user;
+   }
 
   findAll() {
     return this.usersRepository.find({});
