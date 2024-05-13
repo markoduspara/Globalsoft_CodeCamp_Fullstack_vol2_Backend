@@ -1,33 +1,30 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn, Table } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Game } from "../../game/entities/game.entity";
+import { UserLogin } from "../../user_login/entities/user_login.entity";
 
-@Entity('user', { schema: 'db' })
+@Entity("user", { schema: "db" })
 export class User {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })
+  @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
   id: number;
 
-  @Column({
-    type: 'varchar',
-    name: 'username',
-    length: 64,
-    nullable: false,
-  })
+  @Column("varchar", { name: "username", length: 64 })
   username: string;
 
-  @Column({ type: 'varchar', name: 'user_password', nullable: false })
+  @Column("varchar", { name: "user_password", length: 255 })
   userPassword: string;
 
-  /*   @Column({
-    name: 'created_at',
-    nullable: false,
-  })
-  createdAt?: Date; */
-  /* 
-  @Column({
-    name: 'updated_at',
-    nullable: false,
-  })
-  updatedAt?: Date;
+  @OneToMany(() => Game, (game) => game.user_1)
+  games: Game[];
 
-  @Column({ name: 'deleted_at' })
-  deletedAt?: Date; */
+  @OneToMany(() => Game, (game) => game.user_2)
+  games2: Game[];
+
+  @OneToOne(() => UserLogin, (userLogin) => userLogin.user)
+  userLogin: UserLogin;
 }
