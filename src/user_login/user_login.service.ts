@@ -4,6 +4,7 @@ import { UpdateUserLoginDto } from './dto/update-user_login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserLogin } from './entities/user_login.entity';
 import { Repository } from 'typeorm';
+import { UserLoginResponseDto } from './dto/response-user_login.dto';
 
 @Injectable()
 export class UserLoginService {
@@ -11,10 +12,10 @@ export class UserLoginService {
     @InjectRepository(UserLogin)
     private userloginRepository: Repository<UserLogin>,
   ) { }
-  async create(createUserLoginDto: CreateUserLoginDto) {
+  async create(createUserLoginDto: CreateUserLoginDto): Promise<UserLoginResponseDto> {
     try {
       const userLogin = await this.userloginRepository.save(createUserLoginDto);
-      return { id: userLogin.id };
+      return { id: userLogin.id }
     } catch(error) {
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Duplicate entry');
