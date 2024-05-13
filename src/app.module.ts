@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
+import { UserLoginModule } from './user-login/user-login.module';
+import { GameStateModule } from './game_state/game_state.module';
+import { GameModule } from './game/game.module';
+import { GameGridModule } from './game_grid/game_grid.module';
 
 @Module({
   imports: [
@@ -18,6 +22,10 @@ import { User } from './user/entities/user.entity';
       entities: [User],
       synchronize: true,
     }),
+    UserLoginModule,
+    GameStateModule,
+    GameModule,
+    GameGridModule,
   ],
   controllers: [AppController],
   providers: [AppService],
