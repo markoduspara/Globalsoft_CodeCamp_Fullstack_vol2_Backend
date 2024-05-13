@@ -8,14 +8,14 @@ import {
   } from "typeorm";
   import { User } from "../../user/entities/user.entity";
   
-  @Index("uk_user_id", ["userId"], { unique: true })
+  @Index("uk_user_id", ["user_id"], { unique: true })
   @Entity("user_login", { schema: "db" })
   export class UserLogin {
     @PrimaryGeneratedColumn({ type: "int", name: "id", unsigned: true })
     id: number;
   
-    @Column("int", { name: "user_id", unique: true, unsigned: true })
-    userId: number;
+    @Column("int", { name: "user_id", unsigned: true })
+    user_id: number;
   
     @Column("varchar", { name: "ip", length: 225 })
     ip: string;

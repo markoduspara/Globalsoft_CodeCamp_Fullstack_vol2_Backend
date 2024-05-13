@@ -1,15 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserLoginDto } from './dto/create-user_login.dto';
 import { UpdateUserLoginDto } from './dto/update-user_login.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserLogin } from './entities/user_login.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserLoginService {
-  create(createUserLoginDto: CreateUserLoginDto) {
-    return 'This action adds a new userLogin';
+  constructor(
+    @InjectRepository(UserLogin)
+    private userloginRepository: Repository<UserLogin>,
+  ) { }
+  async create(createUserLoginDto: CreateUserLoginDto) {
+    try {
+      const userLogin = await this.userloginRepository.save(createUserLoginDto);
+      return { id: userLogin.id };
+    } catch(error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('Duplicate entry');
+      } 
+    }
   }
 
   findAll() {
-    return `This action returns all userLogin`;
+    return this.userloginRepository.find({});
   }
 
   findOne(id: number) {
