@@ -1,4 +1,5 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn, Table } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, Index, PrimaryGeneratedColumn, Table, UpdateDateColumn } from 'typeorm';
+
 
 @Entity('user', { schema: 'db' })
 export class User {
@@ -16,18 +17,15 @@ export class User {
   @Column({ type: 'varchar', name: 'user_password', nullable: false })
   userPassword: string;
 
-  /*   @Column({
-    name: 'created_at',
-    nullable: false,
-  })
-  createdAt?: Date; */
-  /* 
-  @Column({
-    name: 'updated_at',
-    nullable: false,
-  })
-  updatedAt?: Date;
+  @CreateDateColumn()
+  createdAt: Date; 
+   
+  @UpdateDateColumn()
+  updatedAt: Date; 
 
-  @Column({ name: 'deleted_at' })
-  deletedAt?: Date; */
+  @DeleteDateColumn()
+  deletedAt: Date;
+  nullable: true;
+  default:null;
 }
+

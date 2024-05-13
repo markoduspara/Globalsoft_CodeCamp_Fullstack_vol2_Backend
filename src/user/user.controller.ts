@@ -30,6 +30,11 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
+  @Get('between/:from/:to')
+  findCreatedBetween(@Param('from') from: Date, @Param('to') to: Date){
+    return this.userService.findCreatedBetween(from,to);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);

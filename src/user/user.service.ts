@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Between, Equal, LessThan, MoreThan, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -16,11 +16,15 @@ export class UserService {
   }
 
   findAll() {
-    return this.usersRepository.find({});
+    return this.usersRepository.find();
   }
 
   findOne(id: number) {
     return this.usersRepository.findOne({ where: { id } });
+  }
+
+  findCreatedBetween(from: Date, to: Date) {
+    return this.usersRepository.find({ where: { createdAt: Between(from,to) }})
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
