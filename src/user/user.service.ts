@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -29,5 +29,13 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async findDeletedBetween(from: Date, to: Date) {
+    return this.usersRepository.find({
+      where: {
+        deletedAt: Between(from, to),
+      },
+    });
   }
 }

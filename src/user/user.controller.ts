@@ -39,4 +39,11 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  @Get('deleted/:from/:to')
+  findDeletedBetween(@Param('from') from: string, @Param('to') to: string) {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    return this.userService.findDeletedBetween(fromDate, toDate);
+  }
 }
