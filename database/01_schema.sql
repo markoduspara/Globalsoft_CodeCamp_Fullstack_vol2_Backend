@@ -1,29 +1,12 @@
-<<<<<<< HEAD
-CREATE TABLE IF NOT EXISTS user (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    username varchar(64) NOT NULL,
-    'password' varchar(255) NOT NULL,
-=======
 USE db;
 CREATE TABLE IF NOT EXISTS user (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     username VARCHAR(64) NOT NULL,
     user_password VARCHAR(255) NOT NULL,
->>>>>>> a86d025fffcc52c6edcf066e86316dc4e41e5930
     created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP    NULL,
     PRIMARY KEY (id),
-<<<<<<< HEAD
-    UNIQUE KEY uk_name (username,'password')
-);
-
-CREATE TABLE user_login (
-    id int unsigned NOT NULL AUTO_INCREMENT,
-    user_id  int unsigned NOT NULL,
-    time_stamp  timestamp NOT NULL,
-    ip  varchar(225) NOT NULL,
-=======
     UNIQUE KEY uk_name (username,user_password)
 );
 
@@ -34,14 +17,11 @@ CREATE TABLE IF NOT EXISTS user_login (
     created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP    NULL,
->>>>>>> a86d025fffcc52c6edcf066e86316dc4e41e5930
     PRIMARY KEY pk_id (id),
     UNIQUE KEY uk_user_id (user_id),
     FOREIGN KEY fk_user_id (user_id) REFERENCES user(id)
 );
 
-<<<<<<< HEAD
-=======
 
 CREATE TABLE IF NOT EXISTS  game_state (
     id          TINYINT     UNSIGNED    NOT NULL AUTO_INCREMENT,
@@ -121,4 +101,3 @@ WHERE u1.username = 'admin' AND u2.username = 'admin1';
 INSERT INTO game_grid (game_id, cell_value, cell_index)
 SELECT g.id, 'X', 1 FROM game g
 WHERE g.user_1_id = (SELECT id FROM user WHERE username = 'admin');
->>>>>>> a86d025fffcc52c6edcf066e86316dc4e41e5930
