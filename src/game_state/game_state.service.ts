@@ -1,19 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateGameStateDto } from './dto/create-game_state.dto';
 import { UpdateGameStateDto } from './dto/update-game_state.dto';
+import { GameState } from './entities/game_state.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { GameStateResponseDto } from 'src/game/dto/response-game.dto';
 
-@Injectable()
-export class GameStateService {
-  create(createGameStateDto: CreateGameStateDto) {
-    return 'This action adds a new gameState';
-  }
-
+  @Injectable()
+  export class GameStateService {
+    constructor(
+      @InjectRepository(GameState)
+      private gamesatateRepository: Repository<GameState>,
+    ) { }
+    async create(createGameStateDto: CreateGameStateDto): Promise<GameStateResponseDto> {
+      try {
+        const userLogin = await this.gamesatateRepository.save(createGameStateDto);
+        return { name: userLogin.name }
+      } catch(error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+          throw new ConflictException('Duplicate entry');
+        } 
+      }
+    }
   findAll() {
-    return `This action returns all gameState`;
+    return this.gamesatateRepository.find({});
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} gameState`;
+    return this.gamesatateRepository.findOne({ where: { id}});
+
   }
 
   update(id: number, updateGameStateDto: UpdateGameStateDto) {
