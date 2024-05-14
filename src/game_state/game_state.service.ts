@@ -4,7 +4,7 @@ import { UpdateGameStateDto } from './dto/update-game_state.dto';
 import { GameState } from './entities/game_state.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { GameStateResponseDto } from 'src/game/dto/response-game.dto';
+import { ResponseGameStateDto } from './dto/response-game_state.dto ';
 
   @Injectable()
   export class GameStateService {
@@ -12,7 +12,7 @@ import { GameStateResponseDto } from 'src/game/dto/response-game.dto';
       @InjectRepository(GameState)
       private gamesatateRepository: Repository<GameState>,
     ) { }
-    async create(createGameStateDto: CreateGameStateDto): Promise<GameStateResponseDto> {
+    async create(createGameStateDto: CreateGameStateDto): Promise<ResponseGameStateDto> {
       try {
         const userLogin = await this.gamesatateRepository.save(createGameStateDto);
         return { name: userLogin.name }
