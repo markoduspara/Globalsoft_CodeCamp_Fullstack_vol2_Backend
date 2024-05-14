@@ -1,3 +1,3 @@
-export class GameResponseDto {
-    name: string;
+export class ResponseGameDto {
+    id: number;
 }

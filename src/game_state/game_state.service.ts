@@ -10,11 +10,11 @@ import { ResponseGameStateDto } from './dto/response-game_state.dto ';
   export class GameStateService {
     constructor(
       @InjectRepository(GameState)
-      private gamesatateRepository: Repository<GameState>,
+      private gamestateRepository: Repository<GameState>,
     ) { }
     async create(createGameStateDto: CreateGameStateDto): Promise<ResponseGameStateDto> {
       try {
-        const userLogin = await this.gamesatateRepository.save(createGameStateDto);
+        const userLogin = await this.gamestateRepository.save(createGameStateDto);
         return { name: userLogin.name }
       } catch(error) {
         if (error.code === 'ER_DUP_ENTRY') {
@@ -23,11 +23,11 @@ import { ResponseGameStateDto } from './dto/response-game_state.dto ';
       }
     }
   findAll() {
-    return this.gamesatateRepository.find({});
+    return this.gamestateRepository.find({});
   }
 
   findOne(id: number) {
-    return this.gamesatateRepository.findOne({ where: { id}});
+    return this.gamestateRepository.findOne({ where: { id}});
 
   }
 

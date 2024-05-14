@@ -11,37 +11,37 @@ import {
   import { GameState } from "../../game_state/entities/game_state.entity";
   import { GameGrid } from "../../game_grid/entities/game_grid.entity";
   
-  @Index("user_1_game_state_id", ["user_1GameStateId"], {})
-  @Index("user_1_id", ["user_1Id"], {})
-  @Index("user_2_game_state_id", ["user_2GameStateId"], {})
-  @Index("user_2_id", ["user_2Id"], {})
+  @Index("user_1_game_state_id", ["user_1_game_state_id"], {})
+  @Index("user_1_id", ["user_1_id"], {})
+  @Index("user_2_game_state_id", ["user_2_game_state_id"], {})
+  @Index("user_2_id", ["user_2_id"], {})
   @Entity("game", { schema: "db" })
   export class Game {
     @PrimaryGeneratedColumn({ type: "int", name: "id" })
     id: number;
   
     @Column("int", { name: "user_1_id", unsigned: true })
-    user_1Id: number;
+    user_1_id: number;
   
     @Column("int", { name: "user_2_id", unsigned: true })
-    user_2Id: number;
+    user_2_id: number;
   
     @Column("tinyint", {
       name: "user_1_game_state_id",
       nullable: true,
       unsigned: true,
     })
-    user_1GameStateId: number | null;
+    user_1_game_state_id: number | null;
   
     @Column("tinyint", {
       name: "user_2_game_state_id",
       nullable: true,
       unsigned: true,
     })
-    user_2GameStateId: number | null;
+    user_2_game_state_id: number | null;
   
     @Column("tinyint", { name: "n_game", width: 1 })
-    nGame: boolean;
+    n_game: boolean;
   
     @Column("timestamp", {
       name: "created_at",
