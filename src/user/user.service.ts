@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { ResponseUserDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UserService {
@@ -11,8 +12,13 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
-  create(createUserDto: CreateUserDto) {
-    return createUserDto;
+  async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
+    try {
+      const userCreate = await this.usersRepository.save(createUserDto);
+      return { username: userCreate.username }
+    } catch(error) {
+      return error.message;
+    }
   }
 
   findAll() {
@@ -23,10 +29,36 @@ export class UserService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const userUpdate =  await this.usersRepository.update( { 
+     id: id}, 
+     { 
+       username: updateUserDto.username,
+       userPassword: updateUserDto.user_password
+     });
+     if(userUpdate.affected > 0) {
+       return this.usersRepository.findOne( { where: { id}});
+     } 
+     else {
+       return { statusCode: '304'}
+     }
+    }
+    async findbyName(name: string) {
+      try {
+            const user = await this.usersRepository.findOne( {where: { username: name}});
+            return {username: user.username}
+      } catch(error) {
+        return error.message; 
+      }
   }
-
+  async findbyPass(pass: string) {
+    try {
+          const user = await this.usersRepository.findOne( {where: { userPassword: pass}});
+          return {username: user.username}
+    } catch(error) {
+      return error.message;
+    }
+}
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
