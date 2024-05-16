@@ -8,20 +8,20 @@ import {
   } from "typeorm";
   import { Game } from "../../game/entities/game.entity";
   
-  @Index("game_id", ["gameId", "cellIndex"], { unique: true })
+  @Index("game_id", ["game_id", "cell_index"], { unique: true })
   @Entity("game_grid", { schema: "db" })
   export class GameGrid {
     @PrimaryGeneratedColumn({ type: "tinyint", name: "id" })
     id: number;
   
     @Column("int", { name: "game_id" })
-    gameId: number;
+    game_id: number;
   
     @Column("varchar", { name: "cell_value", nullable: true, length: 1 })
-    cellValue: string | null;
+    cell_value: string | null;
   
     @Column("tinyint", { name: "cell_index" })
-    cellIndex: number;
+    cell_index: number;
   
     @Column("timestamp", {
       name: "created_at",

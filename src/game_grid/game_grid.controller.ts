@@ -22,6 +22,10 @@ export class GameGridController {
     return this.gameGridService.findOne(+id);
   }
 
+  @Get('findbygame/:id')
+  findbyGame(@Param('id') id: number) {
+    return this.gameGridService.findbyGame(+id);
+  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGameGridDto: UpdateGameGridDto) {
     return this.gameGridService.update(+id, updateGameGridDto);
