@@ -20,7 +20,7 @@ import { ResponseGameDto } from './dto/response-game.dto';
         return error.message;
       }
     }
-
+    
   findAll() {
     return this.gameRepository.find({});
   }
@@ -29,8 +29,14 @@ import { ResponseGameDto } from './dto/response-game.dto';
     return this.gameRepository.findOne({ where: { id}});
   }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
+  async update(id: number, updateGameDto: UpdateGameDto): Promise<ResponseGameDto> {
+    try
+    {
+      const gameUpdate = await this.gameRepository.update(id, updateGameDto);
+      return this.gameRepository.findOne( { where: { id}});
+    } catch(error) { 
+      return error.message;
+    }
   }
 
   remove(id: number) {
