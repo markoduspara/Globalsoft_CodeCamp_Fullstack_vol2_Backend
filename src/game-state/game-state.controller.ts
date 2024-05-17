@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { GameStateService } from './game_state.service';
-import { CreateGameStateDto } from './dto/create-game_state.dto';
-import { UpdateGameStateDto } from './dto/update-game_state.dto';
+import { GameStateService } from './game-state.service';
+import { CreateGameStateDto } from './dto/create-game-state.dto';
+import { UpdateGameStateDto } from './dto/update-game-state.dto';
 
 @Controller('game-state')
 export class GameStateController {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { GameStateService } from './game_state.service';
-import { GameStateController } from './game_state.controller';
-import { GameState } from './entities/game_state.entity';
+import { GameStateService } from './game-state.service';
+import { GameStateController } from './game-state.controller';
+import { GameState } from './entities/game-state.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({

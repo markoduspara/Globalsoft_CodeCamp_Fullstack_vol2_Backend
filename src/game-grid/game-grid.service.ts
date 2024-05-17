@@ -1,10 +1,10 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { CreateGameGridDto } from './dto/create-game_grid.dto';
-import { UpdateGameGridDto } from './dto/update-game_grid.dto';
-import { GameGrid } from './entities/game_grid.entity';
+import { CreateGameGridDto } from './dto/create-game-grid.dto';
+import { UpdateGameGridDto } from './dto/update-game-grid.dto';
+import { GameGrid } from './entities/game-grid.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ResponseGameGridDto } from './dto/response-game_grid.dto';
+import { ResponseGameGridDto } from './dto/response-game-grid.dto';
 
 @Injectable()
 export class GameGridService {

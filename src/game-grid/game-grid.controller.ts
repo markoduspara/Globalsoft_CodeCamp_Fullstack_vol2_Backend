@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { GameGridService } from './game_grid.service';
-import { CreateGameGridDto } from './dto/create-game_grid.dto';
-import { UpdateGameGridDto } from './dto/update-game_grid.dto';
+import { GameGridService } from './game-grid.service';
+import { CreateGameGridDto } from './dto/create-game-grid.dto';
+import { UpdateGameGridDto } from './dto/update-game-grid.dto';
 
 @Controller('game-grid')
 export class GameGridController {

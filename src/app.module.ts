@@ -4,14 +4,14 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
-import { UserLoginModule } from './user_login/user_login.module';
-import { GameStateModule } from './game_state/game_state.module';
+import { UserLoginModule } from './user-login/user-login.module';
+import { GameStateModule } from './game-state/game-state.module';
 import { GameModule } from './game/game.module';
-import { GameGridModule } from './game_grid/game_grid.module';
+import { GameGridModule } from './game-grid/game-grid.module';
 import { Game } from './game/entities/game.entity';
-import { GameGrid } from './game_grid/entities/game_grid.entity';
-import { GameState } from './game_state/entities/game_state.entity';
-import { UserLogin } from './user_login/entities/user_login.entity';
+import { GameGrid } from './game-grid/entities/game-grid.entity';
+import { GameState } from './game-state/entities/game-state.entity';
+import { UserLogin } from './user-login/entities/user-login.entity';
 
 @Module({
   imports: [

@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Game } from "../../game/entities/game.entity";
-import { UserLogin } from "../../user_login/entities/user_login.entity";
+import { UserLogin } from "../../user-login/entities/user-login.entity";
 
 @Entity("user", { schema: "db" })
 export class User {

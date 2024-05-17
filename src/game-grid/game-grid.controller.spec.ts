@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GameGridController } from './game_grid.controller';
-import { GameGridService } from './game_grid.service';
+import { GameGridController } from './game-grid.controller';
+import { GameGridService } from './game-grid.service';
 
 describe('GameGridController', () => {
   let controller: GameGridController;

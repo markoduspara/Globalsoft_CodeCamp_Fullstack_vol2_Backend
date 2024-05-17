@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GameStateController } from './game_state.controller';
-import { GameStateService } from './game_state.service';
+import { GameStateController } from './game-state.controller';
+import { GameStateService } from './game-state.service';
 
 describe('GameStateController', () => {
   let controller: GameStateController;

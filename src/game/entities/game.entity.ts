@@ -8,8 +8,8 @@ import {
     PrimaryGeneratedColumn,
   } from "typeorm";
   import { User } from "../../user/entities/user.entity";
-  import { GameState } from "../../game_state/entities/game_state.entity";
-  import { GameGrid } from "../../game_grid/entities/game_grid.entity";
+  import { GameState } from "../../game-state/entities/game-state.entity";
+  import { GameGrid } from "../../game-grid/entities/game-grid.entity";
   
   @Index("user_1_game_state_id", ["user_1_game_state_id"], {})
   @Index("user_1_id", ["user_1_id"], {})

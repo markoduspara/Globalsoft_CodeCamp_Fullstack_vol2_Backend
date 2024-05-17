@@ -1,10 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateGameStateDto } from './dto/create-game_state.dto';
-import { UpdateGameStateDto } from './dto/update-game_state.dto';
-import { GameState } from './entities/game_state.entity';
+import { CreateGameStateDto } from './dto/create-game-state.dto';
+import { UpdateGameStateDto } from './dto/update-game-state.dto';
+import { GameState } from './entities/game-state.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ResponseGameStateDto } from './dto/response-game_state.dto ';
+import { ResponseGameStateDto } from './dto/response-game-state.dto ';
 
   @Injectable()
   export class GameStateService {

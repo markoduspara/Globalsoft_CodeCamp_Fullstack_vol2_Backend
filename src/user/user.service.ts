@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,7 +17,7 @@ export class UserService {
       const userCreate = await this.usersRepository.save(createUserDto);
       return { username: userCreate.username }
     } catch(error) {
-      return error.message;
+      throw new InternalServerErrorException(`${error.message}`);
     }
   }
 
@@ -48,7 +48,7 @@ export class UserService {
             const user = await this.usersRepository.findOne( {where: { username: name}});
             return {username: user.username}
       } catch(error) {
-        return error.message; 
+        throw new InternalServerErrorException(`${error.message}`);
       }
   }
   async findbyPass(pass: string) {
@@ -56,7 +56,7 @@ export class UserService {
           const user = await this.usersRepository.findOne( {where: { userPassword: pass}});
           return {username: user.username}
     } catch(error) {
-      return error.message;
+      throw new InternalServerErrorException(`${error.message}`);
     }
 }
   remove(id: number) {
