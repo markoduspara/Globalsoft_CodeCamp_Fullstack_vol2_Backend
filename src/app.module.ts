@@ -23,7 +23,7 @@ import { UserLogin } from './user-login/entities/user-login.entity';
       username: 'user',
       password: 'password',
       database: 'db',
-      entities: [User,Game,GameGrid,GameState,UserLogin],
+      entities: [User, Game, GameGrid, GameState, UserLogin],
       synchronize: true,
     }),
     UserLoginModule,
