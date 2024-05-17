@@ -16,8 +16,8 @@ export class GameGridService {
   
   async create(createGameGridDto: CreateGameGridDto): Promise<GameGrid[]> {
     const count = await this.gameGridsRepository.count();
-    const gameId = await this.gameGridsRepository.getId()
-    const onMove = count + await this.findFirstMove(gameId);
+    //const gameId = await this.gameGridsRepository.getId()
+    const onMove = count //+ await this.findFirstMove(gameId);
     if (onMove%2 === 0){
       const gameGrid = this.gameGridsRepository.create(createGameGridDto as DeepPartial<GameGrid>);
       await this.gameGridsRepository.save(gameGrid);
@@ -33,8 +33,13 @@ export class GameGridService {
     return this.gameGridsRepository.findOne({ where: { id } });
   }
 
+  findByName(name: string): Promise<number> {
+    return this.gameGridsRepository.findOne({ select: ['id'], where: { name }});
+  }
+
   async findFirstMove(gameId: number): Promise<number> {
-    return await this.gamesRepository.findOne( { select: ['first_move'], where: { id: gameId } });
+    const firstMove = await this.gamesRepository.findOne( { select: ['first_move'], where: { id: gameId } });
+    return firstMove? firstMove.first_move : 0;
   }
 
   update(id: number, updateGameStateDto: UpdateGameGridDto): Promise<boolean> {
