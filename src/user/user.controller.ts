@@ -29,7 +29,14 @@ export class UserController {
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
-
+  @Get('findbyname/:name')
+  findbyName(@Param('name') name: string) {
+    return this.userService.findbyName(name);
+  }
+  @Get('findbypass/:pass')
+  findbyPass(@Param('pass') pass: string) {
+    return this.userService.findbyPass(pass);
+  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
