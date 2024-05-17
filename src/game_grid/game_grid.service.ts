@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateGameGridDto } from './dto/create-game_grid.dto';
 import { UpdateGameGridDto } from './dto/update-game_grid.dto';
 import { GameGrid } from './entities/game_grid.entity';
@@ -20,7 +20,7 @@ export class GameGridService {
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Duplicate entry');
       } 
-      else return error.message;
+      else throw new InternalServerErrorException(`${error.message}`);
     }
   }
 
@@ -37,7 +37,7 @@ export class GameGridService {
           }
           return game;
     } catch(error) {
-      return error.message;
+      throw new InternalServerErrorException(`${error.message}`);
     }
 }
 
@@ -51,7 +51,7 @@ export class GameGridService {
       const gamegridUpdate = await this.gamegridRepository.update(id, updateGameGridDto);
       return this.gamegridRepository.findOne( { where: { id}});
     } catch(error) { 
-      return error.message;
+      throw new InternalServerErrorException(`${error.message}`);
     }
   }
 

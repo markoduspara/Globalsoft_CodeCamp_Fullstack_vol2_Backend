@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,7 +17,7 @@ import { ResponseGameDto } from './dto/response-game.dto';
         const gameCreate = await this.gameRepository.save(createGameDto);
         return { id: gameCreate.id }
       } catch(error) { 
-        return error.message;
+        throw new InternalServerErrorException(`${error.message}`);
       }
     }
     
@@ -35,7 +35,7 @@ import { ResponseGameDto } from './dto/response-game.dto';
       const gameUpdate = await this.gameRepository.update(id, updateGameDto);
       return this.gameRepository.findOne( { where: { id}});
     } catch(error) { 
-      return error.message;
+      throw new InternalServerErrorException(`${error.message}`);
     }
   }
 
