@@ -4,10 +4,13 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
+import { UserLoginModule } from './user-login/user-login.module';
+import { UserLogin } from './user-login/entities/user-login.entity';
 
 @Module({
   imports: [
-    UserModule,
+    UserModule, 
+    UserLoginModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -15,7 +18,7 @@ import { User } from './user/entities/user.entity';
       username: 'user',
       password: 'password',
       database: 'db',
-      entities: [User],
+      entities: [User, UserLogin],
       synchronize: true,
     }),
   ],
