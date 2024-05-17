@@ -29,7 +29,8 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "sequelize-typescript-generator": "^11.0.8",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "typeorm-model-generator": "^0.4.6"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

@@ -1,21 +1,21 @@
-import {Model,Table,Column,DataType,Index,Sequelize,ForeignKey,
-} from 'sequelize-typescript';
-import { CreateDateColumn, DeleteDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import {Column,CreateDateColumn,DeleteDateColumn,Entity,Index,JoinColumn,ManyToOne,PrimaryGeneratedColumn, UpdateDateColumn,
+} from "typeorm";
+import { Game } from "../../game/entities/game.entity";
 
-@Entity('game_grid',{ schema: 'db' })
-export class GameGrid
-{
-  @Column({ primaryKey: true, autoIncrement: true, type: DataType.TINYINT })
-  id?: number;
+/* @Index("game_id", ["gameId", "cellIndex"], { unique: true }) */
+@Entity("game_grid", { schema: "db" })
+export class GameGrid {
+  @PrimaryGeneratedColumn({ type: "tinyint", name: "id" })
+  id: number;
 
-  @Column({ type: DataType.INTEGER })
-  game_id!: number;
+  @Column("int", { name: "game_id" })
+  gameId: number;
 
-  @Column({ allowNull: true, type: DataType.STRING(1) })
-  cell_value?: string;
+  @Column("varchar", { name: "cell_value", nullable: true, length: 1 })
+  cellValue: string | null;
 
-  @Column({ type: DataType.TINYINT })
-  cell_index!: number;
+  @Column("tinyint", { name: "cell_index" })
+  cellIndex: number;
 
   @CreateDateColumn()
   createdAt: Date; 
@@ -27,4 +27,11 @@ export class GameGrid
   deletedAt: Date;
   nullable: true;
   default:null;
+
+  @ManyToOne(() => Game, (game) => game.gameGrs, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "game_id", referencedColumnName: "id" }])
+  game: Game;
 }

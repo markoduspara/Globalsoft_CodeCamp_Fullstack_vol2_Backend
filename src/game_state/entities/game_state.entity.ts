@@ -1,24 +1,30 @@
-import {Model,Table,Column,DataType,Index,Sequelize,ForeignKey,} from 'sequelize-typescript';
-import { CreateDateColumn, DeleteDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import {Column,CreateDateColumn,DeleteDateColumn,Entity,Index,OneToMany,PrimaryGeneratedColumn, UpdateDateColumn,
+} from "typeorm";
+import { Game } from "../../game/entities/game.entity";
 
-  @Entity('game_state',{ schema: 'db' })
-  export class GameState
-  {
-    @Column({ primaryKey: true, autoIncrement: true, type: DataType.TINYINT })
-    id?: number;
-  
-    @Column({ type: DataType.STRING(64) })
-    name!: string;
-  
-    @CreateDateColumn()
-    createdAt: Date; 
+/* @Index("gs_name", ["name"], { unique: true }) */
+@Entity("game_state", { schema: "db" })
+export class GameState {
+  @PrimaryGeneratedColumn({ type: "tinyint", name: "id", unsigned: true })
+  id: number;
+
+  @Column("varchar", { name: "name", unique: true, length: 64 })
+  name: string;
+
+  @CreateDateColumn()
+  createdAt: Date; 
    
-    @UpdateDateColumn()
-    updatedAt: Date; 
-    
-    @DeleteDateColumn()
-    deletedAt: Date;
-    nullable: true;
-    default:null;
-  }
-  
+  @UpdateDateColumn()
+  updatedAt: Date; 
+
+  @DeleteDateColumn()
+  deletedAt: Date;
+  nullable: true;
+  default:null;
+
+  @OneToMany(() => Game, (game) => game.user_1GameState)
+  games: Game[];
+
+  @OneToMany(() => Game, (game) => game.user_2GameState)
+  games2: Game[];
+}

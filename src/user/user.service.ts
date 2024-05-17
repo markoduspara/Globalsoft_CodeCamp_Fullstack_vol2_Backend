@@ -12,7 +12,7 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
   create(createUserDto: CreateUserDto) {
-    return createUserDto;
+    return this.usersRepository.save(createUserDto);
   }
 
   findAll() {

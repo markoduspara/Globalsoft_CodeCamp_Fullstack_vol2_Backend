@@ -1,27 +1,40 @@
-import {Model,Table,Column,DataType,Index,Sequelize,ForeignKey,
-} from 'sequelize-typescript';
-import { CreateDateColumn, DeleteDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import {Column,CreateDateColumn,DeleteDateColumn,Entity,Index,JoinColumn,ManyToOne,OneToMany,PrimaryGeneratedColumn,UpdateDateColumn,
+} from "typeorm";
+import { User } from "../../user/entities/user.entity.js";
+import { GameState } from "../../game_state/entities/game_state.entity.js";
+import { GameGrid } from "../../game_grid/entities/game_grid.entity.js";
 
-@Entity('game', { schema: 'db' })
-export class Game
-{
-  @Column({ primaryKey: true, autoIncrement: true, type: DataType.INTEGER })
-  id?: number;
+/* @Index("user_1_game_state_id", ["user_1GameStateId"], {})
+@Index("user_1_id", ["user_1Id"], {})
+@Index("user_2_game_state_id", ["user_2GameStateId"], {})
+@Index("user_2_id", ["user_2Id"], {}) */
+@Entity("game", { schema: "db" })
+export class Game {
+  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  id: number;
 
-  @Column({ type: DataType.INTEGER })
-  user_1_id!: number;
+  @Column("int", { name: "user_1_id", unsigned: true })
+  user_1Id: number;
 
-  @Column({ type: DataType.INTEGER })
-  user_2_id!: number;
+  @Column("int", { name: "user_2_id", unsigned: true })
+  user_2Id: number;
 
-  @Column({ allowNull: true, type: DataType.TINYINT })
-  user_1_game_state_id?: number;
+  @Column("tinyint", {
+    name: "user_1_game_state_id",
+    nullable: true,
+    unsigned: true,
+  })
+  user_1GameStateId: number | null;
 
-  @Column({ allowNull: true, type: DataType.TINYINT })
-  user_2_game_state_id?: number;
+  @Column("tinyint", {
+    name: "user_2_game_state_id",
+    nullable: true,
+    unsigned: true,
+  })
+  user_2GameStateId: number | null;
 
-  @Column({ type: DataType.TINYINT })
-  n_game!: number;
+  @Column("tinyint", { name: "n_game", width: 1 })
+  nGame: boolean;
 
   @CreateDateColumn()
   createdAt: Date; 
@@ -33,4 +46,35 @@ export class Game
   deletedAt: Date;
   nullable: true;
   default:null;
+
+  @ManyToOne(() => User, (user) => user.games, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_1_id", referencedColumnName: "id" }])
+  user_1: User;
+
+  @ManyToOne(() => User, (user) => user.games2, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_2_id", referencedColumnName: "id" }])
+  user_2: User;
+
+  @ManyToOne(() => GameState, (gameState) => gameState.games, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_1_game_state_id", referencedColumnName: "id" }])
+  user_1GameState: GameState;
+
+  @ManyToOne(() => GameState, (gameState) => gameState.games2, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "user_2_game_state_id", referencedColumnName: "id" }])
+  user_2GameState: GameState;
+
+  @OneToMany(() => GameGrid, (gameGrid) => gameGrid.game)
+  gameGrs: GameGrid[];
 }
