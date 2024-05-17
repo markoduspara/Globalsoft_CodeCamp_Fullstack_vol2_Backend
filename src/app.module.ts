@@ -18,7 +18,7 @@ import { UserLogin } from './user-login/entities/user-login.entity';
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'fullstack-db',
       port: 3306,
       username: 'user',
       password: 'password',
