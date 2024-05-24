@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,12 +17,12 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
   async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
-    try {
-      const userCreate = await this.usersRepository.save(createUserDto);
-      return { username: userCreate.username }
-    } catch(error) {
+    /*   try { */
+    const userCreate = await this.usersRepository.save(createUserDto);
+    return userCreate;
+    /*  } catch (error) {
       throw new InternalServerErrorException(`${error.message}`);
-    }
+    } */
   }
 
   findAll() {
@@ -30,35 +34,41 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const userUpdate =  await this.usersRepository.update( { 
-     id: id}, 
-     { 
-       username: updateUserDto.username,
-       userPassword: updateUserDto.user_password
-     });
-     if(userUpdate.affected > 0) {
-       return this.usersRepository.findOne( { where: { id}});
-     } 
-     else {
-       return { statusCode: '304'}
-     }
+    const userUpdate = await this.usersRepository.update(
+      {
+        id: id,
+      },
+      {
+        username: updateUserDto.username,
+        userPassword: updateUserDto.user_password,
+      },
+    );
+    if (userUpdate.affected > 0) {
+      return this.usersRepository.findOne({ where: { id } });
+    } else {
+      return { statusCode: '304' };
     }
-    async findbyName(name: string) {
-      try {
-            const user = await this.usersRepository.findOne( {where: { username: name}});
-            return {username: user.username}
-      } catch(error) {
-        throw new InternalServerErrorException(`${error.message}`);
-      }
+  }
+  async findbyName(name: string) {
+    try {
+      const user = await this.usersRepository.findOne({
+        where: { username: name },
+      });
+      return { username: user.username };
+    } catch (error) {
+      throw new InternalServerErrorException(`${error.message}`);
+    }
   }
   async findbyPass(pass: string) {
     try {
-          const user = await this.usersRepository.findOne( {where: { userPassword: pass}});
-          return {username: user.username}
-    } catch(error) {
+      const user = await this.usersRepository.findOne({
+        where: { userPassword: pass },
+      });
+      return { username: user.username };
+    } catch (error) {
       throw new InternalServerErrorException(`${error.message}`);
     }
-}
+  }
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
