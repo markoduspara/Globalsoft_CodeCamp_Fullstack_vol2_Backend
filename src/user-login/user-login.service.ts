@@ -11,20 +11,22 @@ export class UserLoginService {
   constructor(
     @InjectRepository(UserLogin)
     private userloginRepository: Repository<UserLogin>,
-  ) { }
-  async create(createUserLoginDto: CreateUserLoginDto): Promise<UserLoginResponseDto> {
+  ) {}
+  async create(
+    createUserLoginDto: CreateUserLoginDto,
+  ): Promise<UserLoginResponseDto> {
     try {
       const userLogin = await this.userloginRepository.save(createUserLoginDto);
-      return { id: userLogin.id }
-    } catch(error) {
+      return { id: userLogin.id };
+    } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Duplicate entry');
-      } 
+      }
     }
   }
 
   findAll() {
-    return this.userloginRepository.find({});
+    //
   }
 
   findOne(id: number) {
