@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { ResponseUserDto } from './dto/response-user.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class UserService {
@@ -71,5 +72,15 @@ export class UserService {
   }
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async login(loginDto: LoginDto) {
+    const user = await this.usersRepository.findOne({
+      where: {
+        username: loginDto.username,
+        userPassword: loginDto.password,
+      },
+    });
+    return user;
   }
 }
