@@ -14,8 +14,17 @@ export class GameService {
   ) {}
   async create(createGameDto: CreateGameDto): Promise<ResponseGameDto> {
     try {
-      const gameCreate = await this.gameRepository.save(createGameDto);
-      return { id: gameCreate.id };
+      const user_1 = await this.gameRepository.findOne({ select: { id: true }, where: {user_1_id: createGameDto.user_1_id } })
+      const user_2 = await this.gameRepository.findOne({ select: { id: true }, where: {user_2_id: createGameDto.user_2_id } })
+      if (user_1 == null){
+        const gameCreate = await this.gameRepository.save(createGameDto);
+      }else if (user_2 == null){
+        const gameCreate = await this.gameRepository.save( { user_2_id: createGameDto.user_2_id } );
+        return { id: gameCreate.id };
+      }else if (user_1 != null && user_2 != null){
+        const gameCreate = await this.gameRepository.findOne({where: {user_1_id: createGameDto.user_1_id, user_2_id: createGameDto.user_2_id } });
+        return { id: gameCreate.id };
+      }
     } catch (error) {
       throw new InternalServerErrorException(`${error.message}`);
     }

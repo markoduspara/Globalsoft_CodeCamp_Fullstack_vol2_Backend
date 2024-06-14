@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import { resolve } from 'path';
+import { ValidationError, ValidatorOptions } from 'class-validator';
 
 config({ path: resolve(__dirname, '.env') });
 
@@ -17,3 +18,9 @@ const DataSourceConfig = new DataSource({
 });
 
 export default DataSourceConfig;
+
+export interface ValidationPipeOptions extends ValidatorOptions {
+  transform?: boolean;
+  disableErrorMessages?: boolean;
+  exceptionFactory?: (errors: ValidationError[]) => any;
+}
